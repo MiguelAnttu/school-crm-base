@@ -6,7 +6,10 @@ export class CRMController {
     private readonly CLAVE_STORAGE = 'school-crm-usuarios'; //Constante privada, no se puede ca
     //Constructor
     constructor(private version: string ) {
-        this.usuarioDelCentro = [
+          const datosLocales = localStorage.getItem(this.CLAVE_STORAGE); 
+          if (datosLocales) { 
+          this.usuarioDelCentro = JSON.parse(datosLocales); 
+          } else { this.usuarioDelCentro = [
             { id: 1, nombre: 'Juan', rol: 'alumno', activo: true },
             { id: 2, nombre: 'María', rol: 'profesor', activo: true },
             { id: 3, nombre: 'Pedro', rol: 'admin', activo: true },
@@ -14,7 +17,11 @@ export class CRMController {
             { id: 5, nombre: 'Marihuana', rol: 'alumno', activo: true },
             { id: 6, nombre: 'Porro', rol: 'alumno', activo: false }
         ]
-    }
+             this.guardarEnDisco(); 
+         } 
+   }
+        
+    
 
     //Métodos: La función de ayer, que estaba en counter convertida en metodo o habilidad
      filtrarUsuariosPorRol(rolBuscado: Rol): Usuario[] {
