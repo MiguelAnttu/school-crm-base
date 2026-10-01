@@ -1,11 +1,22 @@
 import { CRMController } from "./controllers/crm.controller";
 
-//Instanciamos el motor  (creamos el objeto en memoria)
-const miEscuelaCRM = new CRMController("1.0.0");
+async function main(): Promise<void> {
+  const miEscuelaCRM = new CRMController("1.0.0");
 
-console.log("version:", miEscuelaCRM.verVersion());
-//Usamos sus metodos
-const profesor = miEscuelaCRM.filtrarUsuariosPorRol("profesor");
-console.log("profesores:" , profesor);
+  console.log("version:", miEscuelaCRM.verVersion());
 
-miEscuelaCRM.agregarUsuario({ id: 8, nombre: 'Porro', rol: 'alumno', activo: false });
+  const profesor = miEscuelaCRM.filtrarUsuariosPorRol("profesor");
+  console.log("profesores:", profesor);
+
+  const registrado = await miEscuelaCRM.agregarUsuario({
+    id: 8,
+    nombre: "Porra",
+    rol: "alumno",
+    activo: false,
+  });
+
+  console.log(registrado ? "Usuario registrado" : "No se pudo registrar");
+}
+
+void main();
+
